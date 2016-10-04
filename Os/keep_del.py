@@ -85,13 +85,13 @@ def main():
 '.a$..........^......'%$,........`-$.'.....$8.....".&B$$$'......>$.'....'i$`....
 '.m%...........'.....^$B...........n.''.'.'Bx....^..O$$$B`......"$......'"$`....
 	""" 
-	t = time.time()
 	parser = argparse.ArgumentParser(description='Os path')
 	parser.add_argument('-p', dest='TARGET_path', required=True, help='Target path')
 	args = parser.parse_args()
 	success = del_file(args.TARGET_path)
 	success.Get_filename()
 	success.keep_del()
+	time.sleep(1)
 
 if __name__ == '__main__':
 	main()
