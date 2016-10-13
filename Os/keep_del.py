@@ -31,10 +31,10 @@ class del_file:
 					os.remove(del_filename)
 				except:
 					if os.path.exists(del_filename) != True:
-						print del_filename + "is alread del!"
+						print del_filename + "is alread del or no exist!"
 					else:
 						print "please del " + del_filename
-			print "Working---"
+			print "\n>>Working---"
 def main():
 	print """
 ..'@b.........C@............`'@#................................!1......'!{.`...
