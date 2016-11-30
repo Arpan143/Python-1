@@ -13,16 +13,16 @@ def filewrite(data):
 	num += 1
 	
 class Crawler:
-	def __init__(self,url,tag):
+	def __init__(self,url,tag): #def __init__(self,url,tag,re_str)
 		self.url= url
 		self.tag= tag
-		# self.re= re
+		# self.re= re_str
 		self.resultsread= []
 
 	def url_num(self):
 		try:
 			html = urllib.urlopen(self.url).read()
-			urls = re.findall(r'''(?<=a href=").*.html''',html) 
+			urls = re.findall(r'''(?<=a href=").*.html''',html) #urls = re.findall(re_str,html)
 			self.urls = urls
 		except:
 			print self.url,' is error!'
@@ -67,9 +67,9 @@ def main():
 	parser = argparse.ArgumentParser(description= 'Web Crawler')
 	parser.add_argument('-u', dest= 'TARGET_url', required= True, help= 'Target url')#url= http://www.freebuf.com
 	parser.add_argument('-t', dest= 'TARGET_tag', required= True, help= 'Target tag')#tag= img
-	# parser.add_argument('-re', dest='TARGET_re', required=True, help='Web host re')#re = r'''(?<=a href=").*.html'''
+	# parser.add_argument('-re', dest='TARGET_re_str', required=True, help='Web host re')#re = r'''(?<=a href=").*.html'''
 	args = parser.parse_args()
-	success = Crawler(args.TARGET_url, args.TARGET_tag)
+	success = Crawler(args.TARGET_url, args.TARGET_tag) #success = Crawler(args.TARGET_url, args.TARGET_tag, args.TARGET_re_str)
 	success.url_num()
 	success.thread_map()
 	success.filewrite_map()
