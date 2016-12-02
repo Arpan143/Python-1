@@ -1,9 +1,6 @@
 # coding=utf-8
 import time,os,regex,re,sys
 
-# reload(sys)
-# sys.setdefaultencoding('gb2312')
-
 class File_html_Windows():
     def __init__(self):
         self.html = u"""
@@ -18,12 +15,12 @@ class File_html_Windows():
 """
     def Windows_all(self):
         path = os.getcwd()
-        path = raw_input('ÇëÊäÈëÄ¿Â¼(C:\Test\Taeget_folder):')
+        path = raw_input('ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿Â¼(C:\Test\Taeget_folder):')
         path = unicode(path,sys.stdin.encoding)
         a = 1
         for root, dirs, files in os.walk(path):
             if root[len(path):] == '':
-                self.html = self.html + '<details>\n<summary>¸ùÄ¿Â¼</summary>'.decode(sys.stdin.encoding)
+                self.html = self.html + '<details>\n<summary>ï¿½ï¿½Ä¿Â¼</summary>'.decode(sys.stdin.encoding)
                 for y in files:
                     self.html = self.html + '\n<li><a href = >' + y + '</a></li>'
                 self.html = self.html +'\n</details>'
