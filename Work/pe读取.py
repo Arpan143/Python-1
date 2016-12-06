@@ -2,18 +2,21 @@
 #coding:utf-8
 import time,os
 
-class hexcl:
+
+class HexCl:
     def __init__(self,path):
         self.path =path
         self.hexdict ={} #存放以两字节为一单位的字典,用于判断出现频率
         self.filename_list =[]
         self.h =open('result.txt','w+')
-    def Get_filename(self):
+
+    def get_filename(self):
         for root, dirs, files in os.walk(self.path):
             for i in range(len(files)):
                 filename = str(root) + '/' + files[i]
                 filename = filename.replace('\\','/')
                 self.filename_list.append(filename)
+    
     def hex_print(self):
         for g in self.filename_list:
             f = open(g,'rb')
@@ -57,8 +60,8 @@ def main():
 | |      | |    |  |    \   /  \   / | |________ | |________ | |________
 |_|      |_|    |__|     \_/    \_/  |__________||__________||__________|
 '''
-    Result =hexcl(r'C:\Users\Administrator\Desktop\xxx\1')
-    Result.Get_filename()
+    Result =HexCl(r'C:\Users\Administrator\Desktop\xxx\1')
+    Result.get_filename()
     Result.hex_print()
 
 if __name__ == '__main__':

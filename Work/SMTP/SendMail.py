@@ -3,10 +3,10 @@
 import Send_config
 import smtplib
 import datetime
+import sqlite3
+import codecs
 from email.mime.text import MIMEText
 from email.header import Header
-import sqlite3
-import re, codecs, sys
 
 
 class Send_Mail():
@@ -34,10 +34,10 @@ class Send_Mail():
 
     def get_work_content(self):
         f = codecs.open('work.txt', 'r', 'GBK')
-        worklist = f.readlines()
-        today_work1 = worklist[1]
-        today_work2 = worklist[2]
-        tomorrow_work = worklist[4]
+        work_list = f.readlines()
+        today_work1 = work_list[1]
+        today_work2 = work_list[2]
+        tomorrow_work = work_list[4]
         today_work1 = today_work1.encode("utf-8")
         today_work2 = today_work2.encode("utf-8")
         tomorrow_work = tomorrow_work.encode("utf-8")
