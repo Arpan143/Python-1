@@ -15,18 +15,18 @@ class File_html_Windows():
 """
     def Windows_all(self):
         # path = os.getcwd()
-        path = raw_input('请输入目标目录(C:\Test\Taeget_folder):')
+        path = raw_input('Please input path(C:\Test\Taeget_folder):')
         FilePath = path + '/目录.html'
         path = unicode(path,sys.stdin.encoding)
         a = 1
         for root, dirs, files in os.walk(path):
             if root[len(path):] == '':
-                self.html = self.html + '<details>\n<summary>根目录</summary>'.decode(sys.stdin.encoding)
+                self.html = self.html + '<details>\n<summary>Path Directory</summary>'.decode(sys.stdin.encoding)
                 for y in files:
-                    self.html = self.html + '\n<li><a href = "' + root + '\\' + y +'">' + y + '</a></li>'
-                self.html = self.html +'\n</details>'
+                    self.html = self.html + '\n<li><a href = "' + root + '\\' + y + '">' + y + '</a></li>'
+                self.html = self.html + '\n</details>'
             else:
-                self.html = self.html + '<details>\n<summary>' + root[len(path)+1:] +'</summary>'
+                self.html = self.html + '<details>\n<summary>' + root[len(path)+1:] + '</summary>'
                 for y in files:
                     self.html = self.html + '\n<li><a href = "' + root + '\\' + y +'">' + y + '</a></li>'
                 self.html = self.html +'\n</details>'
