@@ -21,7 +21,7 @@ class File_html_Windows():
         a = 1
         for root, dirs, files in os.walk(path):
             if root[len(path):] == '':
-                self.html = self.html + '<details>\n<summary>Path Directory</summary>'.decode(sys.stdin.encoding)
+                self.html = self.html + '<details>\n<summary>/Ŀ¼</summary>'.decode(sys.stdin.encoding)
                 for y in files:
                     self.html = self.html + '\n<li><a href = "' + root + '\\' + y + '">' + y + '</a></li>'
                 self.html = self.html + '\n</details>'
