@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- 
+import argparse
+# import re
 
-import re
 
-
-def mail():
+def file_merge():
     print '''
  _        _   _      _  _    __    _  __________  _           _
 | |      | | \ \    / /| |  /  \  | ||  ________|| |         | |
@@ -20,7 +20,7 @@ def mail():
     for i in range(args.TARGET_num):  # 循环读取多少文件
         f = open(str(i), 'r')  # 打开文件 r 是读取文件
         lines = f.readlines()  # 将文件以列表形式保存在lines里面
-        # lines1=lines[-2:-1]   #将lines倒数第2位赋值给lines1
+        lines1 = lines[-2:-1]
         lines2 = []  # 新建一个lines2列表
         lines2.extend(lines1)  # 向lines2里面添加lines1|extend等于列表间追加的意思,向lines2里面添加lines1
         h = open(r"result.txt", 'a')  # 以追加模式打开文件result.txt
@@ -30,4 +30,4 @@ def mail():
 
 
 if __name__ == '__main__':
-    main()
+    file_merge()
