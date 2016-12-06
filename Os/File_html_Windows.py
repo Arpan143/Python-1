@@ -15,13 +15,13 @@ class File_html_Windows():
 """
     def Windows_all(self):
         # path = os.getcwd()
-        path = raw_input('ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿Â¼C:\Test\Taeget_folder):')
+        path = raw_input('ÇëÊäÈëÄ¿±êÄ¿Â¼(C:\Test\Taeget_folder):')
         FilePath = path + '/Ä¿Â¼.html'
         path = unicode(path,sys.stdin.encoding)
         a = 1
         for root, dirs, files in os.walk(path):
             if root[len(path):] == '':
-                self.html = self.html + '<details>\n<summary>ï¿½ï¿½Ä¿Â¼</summary>'.decode(sys.stdin.encoding)
+                self.html = self.html + '<details>\n<summary>¸ùÄ¿Â¼</summary>'.decode(sys.stdin.encoding)
                 for y in files:
                     self.html = self.html + '\n<li><a href = "' + root + '\\' + y +'">' + y + '</a></li>'
                 self.html = self.html +'\n</details>'
