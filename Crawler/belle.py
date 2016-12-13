@@ -4,12 +4,14 @@ from bs4 import BeautifulSoup
 import requests
 import threading
 import time
+import os
 
 
 def save_img(url_str):
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.75 Safari/537.36',
                }
     soup = BeautifulSoup(requests.get('https://belle.la/page_' + str(url_str) + '/', headers=headers).text, 'lxml')
+    os.mkdir(r'./Download')
     for y in soup.find_all('img'):
         img_url = y.get('src')
         img_name = y.get('alt')
@@ -18,7 +20,7 @@ def save_img(url_str):
         else:
             pass
         print img_url
-        with open(r'F:\Download\{}.{}'.format(img_name, img_url[len(img_url)-3: len(img_url)]), 'wb+') as img_hex:
+        with open(r'.\Download\{}.{}'.format(img_name, img_url[len(img_url)-3: len(img_url)]), 'wb+') as img_hex:
             img_hex.write(requests.get(img_url).content)
             time.sleep(2)
 
