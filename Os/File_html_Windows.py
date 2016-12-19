@@ -1,8 +1,9 @@
 # coding=utf-8
-import os,sys
+import os
+import sys
 
 
-class File_html_Windows():
+class FileHtmlWindows:
     def __init__(self):
         self.html = u"""<html>
 <head>
@@ -13,11 +14,12 @@ class File_html_Windows():
 <h1>Directories</h1>
 <ul>
 """
+
     def Windows_all(self):
         # path = os.getcwd()
         path = raw_input('Please input path(C:\Test\Taeget_folder):')
-        FilePath = path + '/Ŀ¼.html'
-        path = unicode(path,sys.stdin.encoding)
+        FilePath = path + u'/目录.html'
+        path = unicode(path, sys.stdin.encoding)
         a = 1
         for root, dirs, files in os.walk(path):
             if root[len(path):] == '':
@@ -39,6 +41,7 @@ class File_html_Windows():
         f.write(self.html)
         f.close()
 
+
 def main():
     print """
  _        _   _      _  _    __    _  __________  _           _
@@ -50,7 +53,7 @@ def main():
 |_|      |_|    |__|     \_/    \_/  |__________||__________||__________|
 
     """
-    success = File_html_Windows()
+    success = FileHtmlWindows()
     success.Windows_all()
 
 if __name__ == '__main__':

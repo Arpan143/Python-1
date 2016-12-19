@@ -1,5 +1,5 @@
 ﻿#!/usr/bin/env python
-
+# -*-coding:utf-8-*-
 from bs4 import BeautifulSoup
 import requests
 from multiprocessing import Process,Queue,Pool
@@ -12,7 +12,7 @@ def read_img_url(q):
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)' +
                              ' Chrome/55.0.2883.75 Safari/537.36'}
     for i in range(100):
-        soup = BeautifulSoup(requests.get('https://belle.la/page_' + str(i) + '/', headers=headers).text, 'lxml')
+        soup = BeautifulSoup(requests.get(raw_input(u'请输入url:'.encode('gbk')), headers=headers).text, 'lxml')#https://belle.la/page_' + str(i) + '/'
         for y in soup.find_all('img'):
             img_url = y.get('src')
             img_name = y.get('alt')
@@ -45,6 +45,16 @@ def save_img(q):
 
 
 def main():
+    print """
+     _        _   _      _  _    __    _  __________  _           _
+    | |      | | \ \    / /| |  /  \  | ||  ________|| |         | |
+    | |______| |  \ \  / / | | / /\ \ | || |________ | |         | |
+    |  ______  |   \ \/ /  | | | || | | ||  ________|| |         | |
+    | |      | |    \  /   | |_| || |_| || |         | |         | |
+    | |      | |    |  |    \   /  \   / | |________ | |________ | |________
+    |_|      |_|    |__|     \_/    \_/  |__________||__________||__________|
+
+        """
     manager = multiprocessing.Manager()
     q = manager.Queue()
     # lock = manager.Lock()
