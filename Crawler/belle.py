@@ -11,8 +11,10 @@ import random
 def read_img_url(q):
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)' +
                              ' Chrome/55.0.2883.75 Safari/537.36'}
+    html = raw_input(u'请输入url:'.encode('gbk'))
     for i in range(100):
-        soup = BeautifulSoup(requests.get(raw_input(u'请输入url:'.encode('gbk')), headers=headers).text, 'lxml')#https://belle.la/page_' + str(i) + '/'
+        soup = BeautifulSoup(requests.get(html + str(i) + '/', headers=headers).text, 'lxml')
+        # https://belle.la/page_' + str(i) + '/'
         for y in soup.find_all('img'):
             img_url = y.get('src')
             img_name = y.get('alt')
