@@ -14,9 +14,8 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/
                          ' Chrome/55.0.2883.75 Safari/537.36'}
 req = requests.get('https://raw.githubusercontent.com/racaljk/hosts/master/hosts', headers=headers, verify=False)
 try:
-    f = open(r'C:\Windows\System32\drivers\etc\HOSTS','w+')
-    f.write(req.text)
-    f.close()
+    with open(r'C:\Windows\System32\drivers\etc\HOSTS','w+') as f:
+        f.write(req.text)
 except IOError as e:
     print e
     print u"权限不够".encode('gbk')
