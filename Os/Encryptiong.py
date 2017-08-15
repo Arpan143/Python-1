@@ -10,7 +10,7 @@ from Crypto.PublicKey import RSA
 import tqdm
 
 
-class Encryptiong():
+class Encryptiong():  # 功能主类
     def __init__(self, generate=None, public=None, filepath=None, decrypt=None, private=None, generateNum=None):
         self.generate = generate
         self.filepath = filepath
@@ -22,24 +22,27 @@ class Encryptiong():
         else:
             self.generateNum = 1024
 
-    def encryp(self):
-        random_generator = Random.new().read
-        rsa = RSA.generate(self.generateNum, random_generator)
-        private_pem = rsa.exportKey()
-        with open('private.pem', 'w') as f:
+    def encryp(self):  # 生成公钥、私钥文件
+        random_generator = Random.new().read  # 伪随机数生成器
+        rsa = RSA.generate(self.generateNum, random_generator)  # rsa算法生成
+        private_pem = rsa.exportKey()  # 私钥生成
+        with open('private.pem', 'w') as f:  # 生成私钥文件
             f.write(private_pem)
-        public_pem = rsa.publickey().exportKey()
-        with open('public.pem', 'w') as f:
+        public_pem = rsa.publickey().exportKey()  # 公钥生成
+        with open('public.pem', 'w') as f:   # 生成公钥文件
             f.write(public_pem)
 
-    def encryption(self):
+    def encryption(self):  # 加密功能
         res = []
-        length = 100
-        with open(self.public) as f:
+        if self.generateNum == 1024:
+            length = 100  # 1024bit每次加密的长度
+        elif self.generateNum == 2048:
+            length = 200  # 2048bit每次加密的长度
+        with open(self.public) as f:  # 读取公钥文件
             key = f.read()
-        rsakey = RSA.importKey(key)
+        rsakey = RSA.importKey(key)  # 加载公钥
         cipher = Cipher_pkcs1_v1_5.new(rsakey)
-        result = self.getinfo(self.filepath)
+        result = self.getinfo(self.filepath)  # 获取加密目录下所有文件信息
         while True:
             try:
                 file_name, name, cipher_text = result.next()
@@ -51,15 +54,18 @@ class Encryptiong():
             except StopIteration:
                 break
 
-    def decrypted(self):
+    def decrypted(self):  # 解密功能
         res = []
-        length = 128
-        with open(self.private) as f:
+        if self.generateNum == 1024:
+            length = 128  # 1024bit每次解密的长度
+        elif self.generateNum == 2048:
+            length = 256  # 2048bit每次解密的长度
+        with open(self.private) as f:  # 读取私钥文件
             key = f.read()
-        rsakey = RSA.importKey(key)
+        rsakey = RSA.importKey(key)  # 加载私钥
         cipher = Cipher_pkcs1_v1_5.new(rsakey)
-        random_generator = Random.new().read
-        result = self.getinfo(self.decrypt)
+        random_generator = Random.new().read  # 伪随机数生成器
+        result = self.getinfo(self.decrypt)  # 获取解密目录下所有文件信息
         while True:
             try:
                 file_name, name, cipher_text = result.next()
@@ -71,7 +77,7 @@ class Encryptiong():
             except StopIteration:
                 break
 
-    def getinfo(self, filepath):
+    def getinfo(self, filepath):  # 获取文件夹所有文件信息
         get_file_list = []
         for root, dirs, files in os.walk(filepath):
             for name in files:
@@ -113,9 +119,9 @@ def main():
                 keyfile = opt_value[1:]
             if opt_name in ('-f', '--file'):
                 file = opt_value[1:]
-        if encryptor:  # 生成公、密钥功能
+        if encryptor:  # 调用生成公、密钥功能
             Encryptiong(generate=True).encryp()
-        elif generate:  # 加密功能
+        elif generate:  # 调用加密功能
             if file and keyfile:
                 Encryptiong(public=keyfile, filepath=file).encryption()
             elif file is None:
@@ -126,7 +132,7 @@ def main():
                 print 'Place input public file path!'
                 print 'Example:python Encryptiong.py -g -f=D:\\encryptoFilePath\\ -k=D:\\public.pem'
                 exit()
-        elif decrypt:  # 解密功能
+        elif decrypt:  # 调用解密功能
             if keyfile and file:
                 Encryptiong(decrypt=file, private=keyfile).decrypted()
             elif file is None:
