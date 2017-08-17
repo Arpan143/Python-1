@@ -38,21 +38,33 @@ class Encryptiong():  # 功能主类
             length = 100  # 1024bit每次加密的长度
         elif self.generateNum == 2048:
             length = 200  # 2048bit每次加密的长度
+        else:
+            length = 100
         with open(self.public) as f:  # 读取公钥文件
             key = f.read()
         rsakey = RSA.importKey(key)  # 加载公钥
         cipher = Cipher_pkcs1_v1_5.new(rsakey)
-        result = self.getinfo(self.filepath)  # 获取加密目录下所有文件信息
-        while True:
-            try:
-                file_name, name, cipher_text = result.next()
-                for i in tqdm.tqdm(range(0, len(cipher_text), length), desc=name + " is being encrypted:"):
-                    res.append(cipher.encrypt(binascii.b2a_hex(cipher_text)[i:i+length]))
-                with open(file_name, 'wb') as f:
-                    f.write("".join(res))
-                    res = []
-            except StopIteration:
-                break
+        if self.filepath[-1] == "\\":
+            result = self.getinfo(self.filepath)  # 获取加密目录下所有文件信息
+            while True:
+                try:
+                    file_name, name, cipher_text = result.next()
+                    for i in tqdm.tqdm(range(0, len(cipher_text), length), desc=name.decode('gbk') + " is being encrypted:"):
+                        res.append(cipher.encrypt(binascii.b2a_hex(cipher_text)[i:i+length]))
+                    with open(file_name, 'wb') as f:
+                        f.write("".join(res))
+                        res = []
+                except StopIteration:
+                    break
+        else:
+            name = self.filepath.split("\\")[-1]
+            file_name = self.filepath
+            with open(file_name, 'rb') as f:
+                cipher_text = f.read()
+            for i in tqdm.tqdm(range(0, len(cipher_text), length), desc=name.decode('gbk') + " is being encrypted:"):
+                res.append(cipher.encrypt(binascii.b2a_hex(cipher_text)[i:i+length]))
+            with open(file_name, 'wb') as f:
+                f.write("".join(res))
 
     def decrypted(self):  # 解密功能
         res = []
@@ -60,22 +72,34 @@ class Encryptiong():  # 功能主类
             length = 128  # 1024bit每次解密的长度
         elif self.generateNum == 2048:
             length = 256  # 2048bit每次解密的长度
+        else:
+            length = 100
         with open(self.private) as f:  # 读取私钥文件
             key = f.read()
         rsakey = RSA.importKey(key)  # 加载私钥
         cipher = Cipher_pkcs1_v1_5.new(rsakey)
         random_generator = Random.new().read  # 伪随机数生成器
-        result = self.getinfo(self.decrypt)  # 获取解密目录下所有文件信息
-        while True:
-            try:
-                file_name, name, cipher_text = result.next()
-                for i in tqdm.tqdm(range(0, len(cipher_text), length), desc=name + " is being decrypted:"):
-                        res.append(cipher.decrypt(cipher_text[i:i+length], random_generator))
-                with open(file_name, 'wb') as f:
-                    f.write(binascii.a2b_hex("".join(res)))
-                    res = []
-            except StopIteration:
-                break
+        if self.decrypt[-1] == "\\":
+            result = self.getinfo(self.decrypt)  # 获取解密目录下所有文件信息
+            while True:
+                try:
+                    file_name, name, cipher_text = result.next()
+                    for i in tqdm.tqdm(range(0, len(cipher_text), length), desc=name.decode('gbk') + " is being decrypted:"):
+                            res.append(cipher.decrypt(cipher_text[i:i+length], random_generator))
+                    with open(file_name, 'wb') as f:
+                        f.write(binascii.a2b_hex("".join(res)))
+                        res = []
+                except StopIteration:
+                    break
+        else:
+            name = self.decrypt.split("\\")[-1]
+            file_name = self.decrypt
+            with open(file_name, 'rb') as f:
+                cipher_text = f.read()
+            for i in tqdm.tqdm(range(0, len(cipher_text), length), desc=name.decode('gbk') + " is being decrypted:"):
+                res.append(cipher.decrypt(cipher_text[i:i+length], random_generator))
+            with open(file_name, 'wb') as f:
+                f.write(binascii.a2b_hex("".join(res)))
 
     def getinfo(self, filepath):  # 获取文件夹所有文件信息
         get_file_list = []
