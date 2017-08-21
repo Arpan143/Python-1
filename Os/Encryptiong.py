@@ -44,13 +44,26 @@ class Encryptiong():  # 功能主类
             key = f.read()
         rsakey = RSA.importKey(key)  # 加载公钥
         cipher = Cipher_pkcs1_v1_5.new(rsakey)
-        if self.filepath[-1] == "\\":
+        if self.filepath[-1] == "\\":  # Windows
             result = self.getinfo(self.filepath)  # 获取加密目录下所有文件信息
             while True:
                 try:
                     file_name, name, cipher_text = result.next()
                     for i in tqdm.tqdm(range(0, len(cipher_text), length), desc=name.decode('gbk') + " is being encrypted:"):
                         res.append(cipher.encrypt(binascii.b2a_hex(cipher_text)[i:i+length]))
+                    with open(file_name, 'wb') as f:
+                        f.write("".join(res))
+                        res = []
+                except StopIteration:
+                    break
+        elif self.filepath[-1] == "/":  # Linux
+            result = self.getinfo(self.filepath)  # 获取加密目录下所有文件信息
+            while True:
+                try:
+                    file_name, name, cipher_text = result.next()
+                    for i in tqdm.tqdm(range(0, len(cipher_text), length),
+                                       desc=name.decode('gbk') + " is being encrypted:"):
+                        res.append(cipher.encrypt(binascii.b2a_hex(cipher_text)[i:i + length]))
                     with open(file_name, 'wb') as f:
                         f.write("".join(res))
                         res = []
@@ -79,13 +92,26 @@ class Encryptiong():  # 功能主类
         rsakey = RSA.importKey(key)  # 加载私钥
         cipher = Cipher_pkcs1_v1_5.new(rsakey)
         random_generator = Random.new().read  # 伪随机数生成器
-        if self.decrypt[-1] == "\\":
+        if self.decrypt[-1] == "\\":  # Windows
             result = self.getinfo(self.decrypt)  # 获取解密目录下所有文件信息
             while True:
                 try:
                     file_name, name, cipher_text = result.next()
                     for i in tqdm.tqdm(range(0, len(cipher_text), length), desc=name.decode('gbk') + " is being decrypted:"):
                             res.append(cipher.decrypt(cipher_text[i:i+length], random_generator))
+                    with open(file_name, 'wb') as f:
+                        f.write(binascii.a2b_hex("".join(res)))
+                        res = []
+                except StopIteration:
+                    break
+        elif self.decrypt[-1] == "/":  # Linux
+            result = self.getinfo(self.decrypt)  # 获取解密目录下所有文件信息
+            while True:
+                try:
+                    file_name, name, cipher_text = result.next()
+                    for i in tqdm.tqdm(range(0, len(cipher_text), length),
+                                       desc=name.decode('gbk') + " is being decrypted:"):
+                        res.append(cipher.decrypt(cipher_text[i:i + length], random_generator))
                     with open(file_name, 'wb') as f:
                         f.write(binascii.a2b_hex("".join(res)))
                         res = []
