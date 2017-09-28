@@ -20,7 +20,7 @@ class Brute:
             cx_Oracle.connect(weak)
             self.result.append(weak)
         except cx_Oracle.DatabaseError:
-            print 'Brut:\n----------' + weak + '----------'
+            print 'Brut:\n      ----------' + weak + '----------'
 
     def work(self):
         with open('user.txt') as f:
@@ -48,7 +48,7 @@ class Brute:
                 if len(self.threads) > 0:
                     gevent.joinall(self.threads)
                 break
-        print '----------End----------'
+        print '\n----------End----------\n'
         if self.result:
             return self.output()
         else:
@@ -71,7 +71,7 @@ def main():
 
         """
     ip = raw_input('Please input ip:')
-    Brute(ip)
+    Brute(ip).work()
 
 
 if __name__ == '__main__':
