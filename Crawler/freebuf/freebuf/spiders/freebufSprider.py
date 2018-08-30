@@ -9,7 +9,7 @@ class FreebufspriderSpider(scrapy.Spider):
     allowed_domains = ['freebuf.com']
     start_urls = ['http://www.freebuf.com']
     cookie = {
-        'acw_sc__': '5b84f02e3f202def131a1c138b0a017b48a97e2f',
+        'acw_sc__': '5b860b5964470b6e528556c5c137be2837683b70',
     }
 
     def start_requests(self):
